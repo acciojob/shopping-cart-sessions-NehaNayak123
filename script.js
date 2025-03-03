@@ -47,7 +47,7 @@ function addToCart(productId) {
 // Render cart list
 function renderCart() {
 	let cart=JSON.parse(sessionStorage.getItem("cart")) || [];
-	// cartList.innerHTML="";
+	cartList.innerHTML="";
 	cart.forEach((item)=>{
 		const li=document.createElement("li");
 		li.innerText=`${item.id} ${item.name} - ${item.price}`;

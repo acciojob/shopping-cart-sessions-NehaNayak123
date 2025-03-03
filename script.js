@@ -29,11 +29,18 @@ document.addEventListener("DOMContentLoaded",()=>{
 })
 
 // Add item to cart
+// function addToCart(product) {
+//             let cart = JSON.parse(sessionStorage.getItem("cart")) || [];
+//             cart.push(product);
+//             sessionStorage.setItem("cart", JSON.stringify(cart));
+//             loadCart();
+//         }
+
 function addToCart(productId) {
 	let cart=JSON.parse(sessionStorage.getItem("cart")) || [];
 	cart.push(productId);
 	sessionStorage.setItem("cart", JSON.stringify(cart));
-	renderCart(productId);
+	renderCart();
 }
 
 

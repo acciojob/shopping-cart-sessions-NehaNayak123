@@ -13,57 +13,93 @@ const products = [
 const productList = document.getElementById("product-list");
 const cartList = document.getElementById("cart-list");
 const clearBtn = document.getElementById("clear-cart-btn");
+function loadCart() {
+            const cart = JSON.parse(sessionStorage.getItem("cart")) || [];
+            cartList.innerHTML = "";
+            cart.forEach(item => {
+                const li = document.createElement("li");
+                li.textContent = `${item.name} - $${item.price}`;
+                cartList.appendChild(li);
+            });
+        }
 
-document.addEventListener("DOMContentLoaded",()=>{
-	products.forEach((product)=>{
-		const li=document.createElement("li");
-		li.textContent=`${product.name} - ${product.price} `;
-		const addToCartBtn=document.createElement("button");
-		addToCartBtn.textContent="Add To Cart";
-		li.appendChild(addToCartBtn);
-		addToCartBtn.addEventListener("click", ()=>{
-			addToCart(product)
-		})
-		productList.appendChild(li);
-	})
-})
+        function addToCart(product) {
+            let cart = JSON.parse(sessionStorage.getItem("cart")) || [];
+            cart.push(product);
+            sessionStorage.setItem("cart", JSON.stringify(cart));
+            loadCart();
+        }
 
-// Add item to cart
-// function addToCart(product) {
-//             let cart = JSON.parse(sessionStorage.getItem("cart")) || [];
-//             cart.push(product);
-//             sessionStorage.setItem("cart", JSON.stringify(cart));
-//             loadCart();
-//         }
+        function clearCart() {
+            sessionStorage.removeItem("cart");
+            loadCart();
+        }
 
-function addToCart(productId) {
-	let cart=JSON.parse(sessionStorage.getItem("cart")) || [];
-	cart.push(productId);
-	sessionStorage.setItem("cart", JSON.stringify(cart));
-	renderCart();
-}
+        products.forEach(product => {
+            const li = document.createElement("li");
+            li.textContent = `${product.name} - $${product.price}`;
+            const button = document.createElement("button");
+            button.textContent = "Add to Cart";
+            button.addEventListener("click", () => addToCart(product));
+            li.appendChild(button);
+            productList.appendChild(li);
+        });
+
+        // clearCartBtn.addEventListener("click", clearCart);
+        clearBtn.addEventListener("click", clearCart);
+
+        loadCart();
+// /////////////////////////////////////////////////////
+// document.addEventListener("DOMContentLoaded",()=>{
+// 	products.forEach((product)=>{
+// 		const li=document.createElement("li");
+// 		li.textContent=`${product.name} - ${product.price} `;
+// 		const addToCartBtn=document.createElement("button");
+// 		addToCartBtn.textContent="Add To Cart";
+// 		li.appendChild(addToCartBtn);
+// 		addToCartBtn.addEventListener("click", ()=>{
+// 			addToCart(product)
+// 		})
+// 		productList.appendChild(li);
+// 	})
+// })
+
+// // Add item to cart
+// // function addToCart(product) {
+// //             let cart = JSON.parse(sessionStorage.getItem("cart")) || [];
+// //             cart.push(product);
+// //             sessionStorage.setItem("cart", JSON.stringify(cart));
+// //             loadCart();
+// //         }
+
+// function addToCart(productId) {
+// 	let cart=JSON.parse(sessionStorage.getItem("cart")) || [];
+// 	cart.push(productId);
+// 	sessionStorage.setItem("cart", JSON.stringify(cart));
+// 	renderCart();
+// }
 
 
-// Render cart list
-function renderCart() {
-	let cart=JSON.parse(sessionStorage.getItem("cart")) || [];
-	cartList.innerHTML="";
-	cart.forEach((item)=>{
-		const li=document.createElement("li");
-		li.innerText=`${item.id} ${item.name} - ${item.price}`;
-		cartList.appendChild(li);
-	})
-}
+// // Render cart list
+// function renderCart() {
+// 	let cart=JSON.parse(sessionStorage.getItem("cart")) || [];
+// 	cartList.innerHTML="";
+// 	cart.forEach((item)=>{
+// 		const li=document.createElement("li");
+// 		li.innerText=`${item.id} ${item.name} - ${item.price}`;
+// 		cartList.appendChild(li);
+// 	})
+// }
 
 
-// Clear cart
-clearBtn.addEventListener("click", clearCart)
-function clearCart() {
-	sessionStorage.removeItem("cart");
-	renderCart();
-}
+// // Clear cart
+// clearBtn.addEventListener("click", clearCart)
+// function clearCart() {
+// 	sessionStorage.removeItem("cart");
+// 	renderCart();
+// }
 
-renderCart();
+// renderCart();
 // /////////////////////////////////////////////////////////////
 // // Render product list
 // function renderProducts() {
